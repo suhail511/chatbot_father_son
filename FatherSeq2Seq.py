@@ -135,7 +135,7 @@ numLayersLSTM = 3
 numIterations = 500000
 
 # Loading in all the data structures
-with open("wordList.txt", "rb") as fp:
+with open("data/FatherWordList.txt", "rb") as fp:
 	wordList = pickle.load(fp)
 
 vocabSize = len(wordList)
@@ -227,11 +227,11 @@ for i in range(numIterations):
 
 	curLoss, _, pred = sess.run([loss, optimizer, decoderPrediction], feed_dict=feedDict)
 
-	if (i % 50 == 0):
+	if (i % 200 == 0):
 		print('Current loss:', curLoss, 'at iteration', i)
 		summary = sess.run(merged, feed_dict=feedDict)
 		writer.add_summary(summary, i)
-	if (i % 25 == 0 and i != 0):
+	if (i % 100 == 0 and i != 0):
 		num = randint(0,len(encoderTestStrings) - 1)
 		print(encoderTestStrings[num])
 		inputVector = getTestInput(encoderTestStrings[num], wordList, maxEncoderLength);
@@ -243,4 +243,4 @@ for i in range(numIterations):
 		print(idsToSentence(ids, wordList))
 
 	if (i % 10000 == 0 and i != 0):
-		savePath = saver.save(sess, "models/fatherpretrained_seq2seq.ckpt", global_step=i)
+		savePath = saver.save(sess, "models/father/fatherpretrained_seq2seq.ckpt", global_step=i)

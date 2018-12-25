@@ -54,7 +54,8 @@ def getTrainingBatch():
 	num = randint(0,numTrainingExamples - batchSize - 1)
 	arr = xTrain[num:num + batchSize]
 	labels = yTrain[num:num + batchSize]
-	return arr, labels[:,np.newaxis]
+	return arr, np.array(labels)[:,np.newaxis]
+
 
 continueWord2Vec = True
 # Loading the data structures if they are present in the directory
@@ -77,7 +78,7 @@ else:
 	# 	np.save('Word2VecXTrain.npy', xTrain)
 	# 	np.save('Word2VecYTrain.npy', yTrain)
 	# else:
-		continueWord2Vec = False
+	continueWord2Vec = False
 	with open("data/SonWordList.txt", "wb") as fp:
 		pickle.dump(wordList, fp)
 
