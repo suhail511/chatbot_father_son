@@ -63,9 +63,9 @@ for index,lines in enumerate(allLines):
         myMessage, otherPersonsMessage, currentSpeaker = "","",""
 
 
-np.save('sonConversationDictionary.npy', responseDictionary)
+np.save('data/sonConversationDictionary.npy', responseDictionary)
 
-conversationFile = open('sonConversationData.txt', 'w')
+conversationFile = open('data/sonConversationData.txt', 'w')
 for key,value in responseDictionary.items():
     if (not key.strip() or not value.strip()):
         # If there are empty strings
@@ -115,9 +115,9 @@ for index,lines in enumerate(allLines):
             responseDictionary[otherPersonsMessage] = myMessage
         myMessage, otherPersonsMessage, currentSpeaker = "","",""
 
-np.save('fatherConversationDictionary.npy', responseDictionary)
+np.save('data/fatherConversationDictionary.npy', responseDictionary)
 
-conversationFile = open('fatherConversationData.txt', 'w')
+conversationFile = open('data/fatherConversationData.txt', 'w')
 for key,value in responseDictionary.items():
     if (not key.strip() or not value.strip()):
         # If there are empty strings

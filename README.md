@@ -4,7 +4,7 @@ The Father-Son chatbot that I trained to talk. This is following a clone of [thi
 
 ## Overview
 
-For this project, I wanted to train a Sequence To Sequence model on some conversation logs of Father-Son conversation dataset.Let me explain how you can train the chatbot.
+For this project, I wanted to train a Sequence To Sequence model on some conversation logs of Father-Son conversation dataset. Let me explain how you can train the chatbot.
 
 ## Requirements and Installation
 In order to run these scripts, you'll need the following libraries.
@@ -25,7 +25,7 @@ In order to run these scripts, you'll need the following libraries.
     ```bash
     cd chatbot_father_son
     ```
-3. The first job is to get Chat Data samples from different sources and put them in 'files' folder.
+3. The first job is to get Chat Data samples from different sources and put them in '''files''' folder.
 Make sure the txt files are in the following format:
 ![](Images/sample01.png)
 
@@ -35,18 +35,19 @@ Make sure the txt files are in the following format:
     ```
     This will create Conversation Data for both Father and Son. This script will create a files named **sonConversationDictionary.npy** and **fatherConversationDictionary.npy** which are Numpy objects that contains pairs in the form of (MESSAGE, RESPONSE). File named **sonConversationData.txt** and **fatherConversationData.txt** will also be created. These are simply large text files the dictionary data in a unified form.
 
-<!-- 5. Now that we have these files, we can start creating our word vectors through a Word2Vec model. This step is a little different from the others. The Tensorflow function we see later on (in seq2seq.py) actually also handles the embedding part. So you can either decide to train your own vectors or have the seq2seq function do it jointly, which is what I ended up doing.**If you want to create your own word vectors though Word2Vec, say y at the prompt (after running the following). If you don't, then that's fine, reply n and this function will only create the wordList.txt.**
+5. Now that we have these files, we can start creating our word vectors through a Word2Vec model. This step is a little different from the others. The Tensorflow function we see later on (in seq2seq.py) actually also handles the embedding part.
     ```bash
-    python Word2Vec.py
+    python SonWord2Vec.py
+    python FatherWord2Vec.py
     ```
-    If you run word2vec.py in its entirety, this will create 4 different files. **Word2VecXTrain.npy** and **Word2VecYTrain.npy** are the training matrices that Word2Vec will use. We save these in our folder, in case we need to train our Word2Vec model again with different hyperparameters. We also save **wordList.txt**, which simply contains all of the unique words in our corpus. The last file saved is **embeddingMatrix.npy**  which is a Numpy matrix that contains all of the generatedword vectors.
+    If you run word2vec.py in its entirety, this will create different files for Father and Son. **SonWord2VecXTrain.npy**, **SonWord2VecYTrain.npy**, **FatherWord2VecXTrain.npy** and **FatherWord2VecYTrain.npy** are the training matrices that Word2Vec will use. We save these in our folder, in case we need to train our Word2Vec model again with different hyperparameters. We also save **wordList.txt**, which simply contains all of the unique words in our corpus. The last file saved is **embeddingMatrix.npy**  which is a Numpy matrix that contains all of the generatedword vectors.
 
 6. Now, we can use create and train our Seq2Seq model.
     ```bash
     python Seq2Seq.py
     ```
     This will create 3 or more different files. **Seq2SeqXTrain.npy** and **Seq2SeqYTrain.npy** are the training matrices that Seq2Seq will use. Again, we save these just in case we want to make changes to our model architecture, and we don't want to recompute our training set. The last file(s) will be .ckpt files which holds our saved Seq2Seq model. Models will be saved at different time periods in the training loop. These will be used and deployed once we've created our chatbot.
-
+<!--
 7. Now that we have a saved model, let's now create our Facebook chatbot. To do so, I'd recommend following this [tutorial](https://github.com/jw84/messenger-bot-tutorial). You don't need to read anything beneath the "Customize what the bot says" section. Our Seq2Seq model will handle that part. **IMPORTANT - The tutorial will tell you to create a new folder where the Node project will lie.** Keep in mind this folder will be different from our folder. You can think of this folder as being where our data preprocessing and model training lie, while the other folder is strictly reserved for the Express app (EDIT: I believe you can follow the tutorial's steps inside of our folder and just create the Node project, Procfile, and index.js files in here if you want). The tutorial itself should be sufficient, but here's a summary of the steps.
 
     - Build the server, and host on Heroku.
