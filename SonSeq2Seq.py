@@ -183,7 +183,7 @@ decoderLabels = [tf.placeholder(tf.int32, shape=(None,)) for i in range(maxDecod
 decoderInputs = [tf.placeholder(tf.int32, shape=(None,)) for i in range(maxDecoderLength)]
 feedPrevious = tf.placeholder(tf.bool)
 
-encoderLSTM = tf.nn.rnn_cell.BasicLSTMCell(lstmUnits, state_is_tuple=True)
+encoderLSTM = tf.nn.rnn_cell.LSTMCell(lstmUnits, state_is_tuple=True, name='basic_lstm_cell')
 
 #encoderLSTM = tf.nn.rnn_cell.MultiRNNCell([singleCell]*numLayersLSTM, state_is_tuple=True)
 # Architectural choice of of whether or not to include ^
