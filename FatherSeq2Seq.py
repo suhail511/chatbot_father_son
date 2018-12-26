@@ -221,7 +221,7 @@ zeroVector = np.zeros((1), dtype='int32')
 
 start_time = time.time()
 
-for i in range(51000):
+for i in range(numIterations):
 
 	encoderTrain, decoderTargetTrain, decoderInputTrain = getTrainingBatch(xTrain, yTrain, batchSize, maxEncoderLength)
 	feedDict = {encoderInputs[t]: encoderTrain[t] for t in range(maxEncoderLength)}
