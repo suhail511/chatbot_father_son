@@ -9,7 +9,7 @@ def cleanMessage(message):
 	# Remove new lines within message
 	cleanedMessage = message.replace('\n',' ').lower()
 	# Remove punctuation
-# 	cleanedMessage = re.sub('([.,!?])','', cleanedMessage)
+	cleanedMessage = re.sub('([.,!?])','', cleanedMessage)
 	# Remove multiple spaces in message
 	cleanedMessage = re.sub(' +',' ', cleanedMessage)
 	return cleanedMessage
@@ -33,7 +33,7 @@ for index,lines in enumerate(allLines):
         if not myMessage:
             # Want to find the first message that person send (if sent multiple in a row)
             startMessageIndex = index - 1
-        myMessage += justMessage[colon+3:]
+        myMessage += justMessage[colon+1:]
 
     elif myMessage:
         # Now go and see what message the other person sent by looking at previous messages
@@ -50,15 +50,15 @@ for index,lines in enumerate(allLines):
                 myMessage = cleanMessage(myMessage)
                 responseDictionary[otherPersonsMessage] = myMessage
                 break
-            otherPersonsMessage = justMessage[colon+3:] + otherPersonsMessage
+            otherPersonsMessage = justMessage[colon+1:] + otherPersonsMessage
         if startMessageIndex < 1:
             justMessage = lines
             colon = justMessage.find(':')
-            otherPersonsMessage = justMessage[colon+2:]
+            otherPersonsMessage = justMessage[colon+1:]
             otherPersonsMessage = cleanMessage(otherPersonsMessage)
             currentLine = allLines[2]
             colon = currentLine.find(':')
-            myMessage = cleanMessage(currentLine[colon+2:])
+            myMessage = cleanMessage(currentLine[colon+1:])
             responseDictionary[otherPersonsMessage] = myMessage
         myMessage, otherPersonsMessage, currentSpeaker = "","",""
 
@@ -70,7 +70,7 @@ for key,value in responseDictionary.items():
     if (not key.strip() or not value.strip()):
         # If there are empty strings
         continue
-    conversationFile.write(key.strip() + value.strip())
+    conversationFile.write(key.strip() + ' ' + value.strip() + ' ')
 
 
 #This is for the Father
@@ -122,4 +122,4 @@ for key,value in responseDictionary.items():
     if (not key.strip() or not value.strip()):
         # If there are empty strings
         continue
-    conversationFile.write(key.strip() + value.strip())
+    conversationFile.write(key.strip() + ' ' + value.strip() +' ')
