@@ -202,7 +202,7 @@ saver = tf.train.Saver()
 sess.run(tf.global_variables_initializer())
 # Loading in a saved model
 if (os.path.isfile('models/son/checkpoint')):
-	print('Training Models Found')
+	print('Training Checkpoint Found')
 	saver.restore(sess, tf.train.latest_checkpoint('models/son/'))
 
 # Uploading results to Tensorboard
@@ -214,9 +214,9 @@ writer = tf.summary.FileWriter(logdir, sess.graph)
 # Some test strings that we'll use as input at intervals during training
 encoderTestStrings = ["I know",
 					"Are you sure?",
-					"How are you, son?",
-					"That’s remarkable.",
-					"Did you hear from Law School?"
+					"How are you son?",
+					"remarkable",
+					"Did you hear from Law School"
 					]
 
 zeroVector = np.zeros((1), dtype='int32')

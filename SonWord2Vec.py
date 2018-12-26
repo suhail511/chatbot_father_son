@@ -15,11 +15,11 @@ import os
 # Check out Tensorflow's documentation which is pretty good for Word2Vec
 # https://www.tensorflow.org/tutorials/word2vec
 
-wordVecDimensions = 100
-batchSize = 128
-numNegativeSample = 64
-windowSize = 5
-numIterations = 100000
+# wordVecDimensions = 100
+# batchSize = 128
+# numNegativeSample = 64
+# windowSize = 5
+# numIterations = 100000
 
 # This function just takes in the conversation data and makes it
 # into one huge string, and then uses a Counter to identify words
@@ -57,30 +57,31 @@ def processDataset(filename):
 # 	return arr, np.array(labels)[:,np.newaxis]
 
 
-continueWord2Vec = True
+# continueWord2Vec = True
 # Loading the data structures if they are present in the directory
-if (os.path.isfile('data/SonWord2VecXTrain.npy') and os.path.isfile('data/SonWord2VecYTrain.npy') and os.path.isfile('data/SonWordList.txt')):
-	xTrain = np.load('data/SonWord2VecXTrain.npy')
-	yTrain = np.load('data/SonWord2VecYTrain.npy')
-	print('Finished loading training matrices')
-	with open("data/SonWordList.txt", "rb") as fp:
-		wordList = pickle.load(fp)
-	print('Finished loading word list')
-
-else:
-	fullCorpus, datasetDictionary = processDataset('data/sonConversationData.txt')
-	print('Finished parsing and cleaning dataset')
-	wordList = list(datasetDictionary.keys())
-	# createOwnVectors = input('Do you want to create your own vectors through Word2Vec (y/n)?')
-	# if (createOwnVectors == 'y'):
-	# 	xTrain, yTrain  = createTrainingMatrices(datasetDictionary, fullCorpus)
-	# 	print('Finished creating training matrices')
-	# 	np.save('Word2VecXTrain.npy', xTrain)
-	# 	np.save('Word2VecYTrain.npy', yTrain)
-	# else:
-	continueWord2Vec = False
-	with open("data/SonWordList.txt", "wb") as fp:
-		pickle.dump(wordList, fp)
+# if (os.path.isfile('data/SonWord2VecXTrain.npy') and os.path.isfile('data/SonWord2VecYTrain.npy') and os.path.isfile('data/SonWordList.txt')):
+# 	xTrain = np.load('data/SonWord2VecXTrain.npy')
+# 	yTrain = np.load('data/SonWord2VecYTrain.npy')
+# 	print('Finished loading training matrices')
+# 	with open("data/SonWordList.txt", "rb") as fp:
+# 		wordList = pickle.load(fp)
+# 	print('Finished loading word list')
+#
+# else:
+fullCorpus, datasetDictionary = processDataset('data/sonConversationData.txt')
+print('Finished parsing and cleaning dataset')
+wordList = list(datasetDictionary.keys())
+# createOwnVectors = input('Do you want to create your own vectors through Word2Vec (y/n)?')
+# if (createOwnVectors == 'y'):
+# 	xTrain, yTrain  = createTrainingMatrices(datasetDictionary, fullCorpus)
+# 	print('Finished creating training matrices')
+# 	np.save('Word2VecXTrain.npy', xTrain)
+# 	np.save('Word2VecYTrain.npy', yTrain)
+# else:
+# continueWord2Vec = False
+with open("data/SonWordList.txt", "wb") as fp:
+	pickle.dump(wordList, fp)
+print('Created file data/SonWordList.txt')
 
 # If you do not want to create your own word vectors and you'd just like to
 # have Tensorflow's seq2seq take care of that, then you don't need to run
