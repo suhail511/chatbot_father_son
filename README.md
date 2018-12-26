@@ -25,11 +25,11 @@ In order to run these scripts, you'll need the following libraries.
     ```bash
     cd chatbot_father_son
     ```
-3. The first job is to get Chat Data samples from different sources and put them in '''files''' folder.
-Make sure the txt files are in the following format:
+3. The first job is to get Chat Data samples from different sources and put them in '''files''' folder. Make sure the txt files are in the following format:
 
   ![](Images/sample01.jpg)
 
+### If you don't have any Chat Data samples, use our pre-trained model. Skip to step 7.
 4. Now that we have all our conversation logs, we can go ahead and create our dataset. In our directory, let's run:
     ```bash
     python createDataset.py
