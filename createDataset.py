@@ -10,8 +10,11 @@ def cleanMessage(message):
 	cleanedMessage = message.replace('\n',' ').lower()
 	# Remove punctuation
 	cleanedMessage = re.sub('([.,!?])','', cleanedMessage)
+	# cleanedMessage = re.sub("\\'",'', cleanedMessage)
+	# cleanedMessage = re.sub("\\,:",'', cleanedMessage)
 	# Remove multiple spaces in message
 	cleanedMessage = re.sub(' +',' ', cleanedMessage)
+	# cleanedMessage = re.sub('\W+',' ', cleanedMessage)
 	return cleanedMessage
 
 #Read file and Remove empty lines
@@ -19,6 +22,8 @@ cnvFile = open('files/conversation.txt', 'r')
 allLines = cnvFile.readlines()
 while '\n' in allLines: allLines.remove('\n')
 
+#convert to everything to lowercase
+[x.lower() for x in allLines]
 
 #This is for the son
 personName = 'son'
