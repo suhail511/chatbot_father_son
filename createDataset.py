@@ -86,7 +86,7 @@ for index,lines in enumerate(allLines):
         if not myMessage:
             # Want to find the first message that person send (if sent multiple in a row)
             startMessageIndex = index - 1
-        myMessage += justMessage[colon+3:]
+        myMessage += justMessage[colon+1:]
 
     elif myMessage:
         # Now go and see what message the other person sent by looking at previous messages
@@ -103,15 +103,15 @@ for index,lines in enumerate(allLines):
                 myMessage = cleanMessage(myMessage)
                 responseDictionary[otherPersonsMessage] = myMessage
                 break
-            otherPersonsMessage = justMessage[colon+3:] + otherPersonsMessage
+            otherPersonsMessage = justMessage[colon+1:] + otherPersonsMessage
         if startMessageIndex < 1:
             justMessage = allLines[0]
             colon = justMessage.find(':')
-            otherPersonsMessage = justMessage[colon+2:]
+            otherPersonsMessage = justMessage[colon+1:]
             otherPersonsMessage = cleanMessage(otherPersonsMessage)
             currentLine = allLines[1]
             colon = currentLine.find(':')
-            myMessage = cleanMessage(currentLine[colon+2:])
+            myMessage = cleanMessage(currentLine[colon+1:])
             responseDictionary[otherPersonsMessage] = myMessage
         myMessage, otherPersonsMessage, currentSpeaker = "","",""
 
