@@ -217,6 +217,11 @@ encoderTestStrings = ["dad?",
 
 zeroVector = np.zeros((1), dtype='int32')
 
+
+if (os.path.isfile('models/son/checkpoint')):
+	saver.restore(sess, "models/son/sonpretrained_seq2seq.ckpt")
+	print("Model restored.")
+
 for i in range(numIterations):
 
 	encoderTrain, decoderTargetTrain, decoderInputTrain = getTrainingBatch(xTrain, yTrain, batchSize, maxEncoderLength)

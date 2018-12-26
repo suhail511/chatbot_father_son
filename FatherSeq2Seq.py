@@ -146,8 +146,8 @@ if (os.path.isfile('embeddingMatrix.npy')):
 	wordVectors = np.load('embeddingMatrix.npy')
 	wordVecDimensions = wordVectors.shape[1]
 else:
-	question = 'Since we cant find an embedding matrix, how many dimensions do you want your word vectors to be?: '
-	wordVecDimensions = int(input(question))
+	print('Since we cant find an embedding matrix, setting dimensions of word vectors to 100')
+	wordVecDimensions = int(100)
 
 # Add two entries to the word vector matrix. One to represent padding tokens,
 # and one to represent an end of sentence token
@@ -198,7 +198,7 @@ optimizer = tf.train.AdamOptimizer(1e-4).minimize(loss)
 sess = tf.Session()
 saver = tf.train.Saver()
 # If you're loading in a saved model, use the following
-#saver.restore(sess, tf.train.latest_checkpoint('models/'))
+# saver.restore(sess, tf.train.latest_checkpoint('models/father/'))
 sess.run(tf.global_variables_initializer())
 
 # Uploading results to Tensorboard
@@ -216,6 +216,11 @@ encoderTestStrings = ["I know",
 					]
 
 zeroVector = np.zeros((1), dtype='int32')
+
+
+# if (os.path.isfile('models/father/checkpoint')):
+# 	saver.restore(sess, "models/father/fatherpretrained_seq2seq.ckpt")
+# 	print("Model restored.")
 
 for i in range(numIterations):
 
