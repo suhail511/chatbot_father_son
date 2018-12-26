@@ -199,9 +199,9 @@ optimizer = tf.train.AdamOptimizer(1e-4).minimize(loss)
 
 sess = tf.Session()
 saver = tf.train.Saver()
+sess.run(tf.global_variables_initializer())
 # If you're loading in a saved model, use the following
 saver.restore(sess, tf.train.latest_checkpoint('models/father/'))
-sess.run(tf.global_variables_initializer())
 
 # Uploading results to Tensorboard
 tf.summary.scalar('Loss', loss)
@@ -219,13 +219,9 @@ encoderTestStrings = ["I know",
 
 zeroVector = np.zeros((1), dtype='int32')
 
-
-# if (os.path.isfile('models/father/checkpoint')):
-# 	saver.restore(sess, "models/father/fatherpretrained_seq2seq.ckpt")
-# 	print("Model restored.")
 start_time = time.time()
 
-for i in range(11000):
+for i in range(51000):
 
 	encoderTrain, decoderTargetTrain, decoderInputTrain = getTrainingBatch(xTrain, yTrain, batchSize, maxEncoderLength)
 	feedDict = {encoderInputs[t]: encoderTrain[t] for t in range(maxEncoderLength)}
