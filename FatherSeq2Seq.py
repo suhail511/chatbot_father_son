@@ -148,7 +148,7 @@ if (os.path.isfile('embeddingMatrix.npy')):
 	wordVectors = np.load('embeddingMatrix.npy')
 	wordVecDimensions = wordVectors.shape[1]
 else:
-	print('Since we cant find an embedding matrix, setting dimensions of word vectors to 100')
+	print('No embedding matrix found, setting dimensions of word vectors to 100')
 	wordVecDimensions = int(100)
 
 # Add two entries to the word vector matrix. One to represent padding tokens,
@@ -200,8 +200,10 @@ optimizer = tf.train.AdamOptimizer(1e-4).minimize(loss)
 sess = tf.Session()
 saver = tf.train.Saver()
 sess.run(tf.global_variables_initializer())
-# If you're loading in a saved model, use the following
-saver.restore(sess, tf.train.latest_checkpoint('models/father/'))
+# Loading in a saved model
+if (os.path.isfile('models/father/checkpoint')):
+	print('Training Models Found')
+	saver.restore(sess, tf.train.latest_checkpoint('models/father/'))
 
 # Uploading results to Tensorboard
 tf.summary.scalar('Loss', loss)
