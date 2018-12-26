@@ -210,11 +210,11 @@ logdir = "tensorboard/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S") + "/
 writer = tf.summary.FileWriter(logdir, sess.graph)
 
 # Some test strings that we'll use as input at intervals during training
-encoderTestStrings = ["I know",
-					"Are you sure?",
-					"How are you, son?",
-					"That’s remarkable.",
-					"Did you hear from Law School?"
+encoderTestStrings = ["dad?",
+					  "Hey!",
+					  "how are you",
+					  "tell me about when you were my age",
+					  "What did she do to you?"
 					]
 
 zeroVector = np.zeros((1), dtype='int32')
