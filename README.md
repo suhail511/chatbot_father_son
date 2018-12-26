@@ -27,7 +27,8 @@ In order to run these scripts, you'll need the following libraries.
     ```
 3. The first job is to get Chat Data samples from different sources and put them in '''files''' folder.
 Make sure the txt files are in the following format:
-![](Images/sample01.png)
+
+  ![](images/sample01.jpg)
 
 4. Now that we have all our conversation logs, we can go ahead and create our dataset. In our directory, let's run:
     ```bash
