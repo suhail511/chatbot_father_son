@@ -202,7 +202,7 @@ saver = tf.train.Saver()
 sess.run(tf.global_variables_initializer())
 # Loading in a saved model
 if (os.path.isfile('models/father/checkpoint')):
-	print('Training Models Found')
+	print('Training Checkpoint Found, Loading ... ')
 	saver.restore(sess, tf.train.latest_checkpoint('models/father/'))
 
 # Uploading results to Tensorboard
