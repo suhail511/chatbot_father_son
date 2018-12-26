@@ -6,6 +6,8 @@ import datetime
 from sklearn.utils import shuffle
 import pickle
 import os
+import time
+
 # Removes an annoying Tensorflow warning
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 
@@ -181,7 +183,7 @@ decoderLabels = [tf.placeholder(tf.int32, shape=(None,)) for i in range(maxDecod
 decoderInputs = [tf.placeholder(tf.int32, shape=(None,)) for i in range(maxDecoderLength)]
 feedPrevious = tf.placeholder(tf.bool)
 
-encoderLSTM = tf.nn.rnn_cell.BasicLSTMCell(lstmUnits, state_is_tuple=True)
+encoderLSTM = tf.nn.rnn_cell.LSTMCell(lstmUnits, state_is_tuple=True, name='basic_lstm_cell')
 
 #encoderLSTM = tf.nn.rnn_cell.MultiRNNCell([singleCell]*numLayersLSTM, state_is_tuple=True)
 # Architectural choice of of whether or not to include ^
@@ -198,7 +200,7 @@ optimizer = tf.train.AdamOptimizer(1e-4).minimize(loss)
 sess = tf.Session()
 saver = tf.train.Saver()
 # If you're loading in a saved model, use the following
-# saver.restore(sess, tf.train.latest_checkpoint('models/father/'))
+saver.restore(sess, tf.train.latest_checkpoint('models/father/'))
 sess.run(tf.global_variables_initializer())
 
 # Uploading results to Tensorboard
@@ -221,8 +223,9 @@ zeroVector = np.zeros((1), dtype='int32')
 # if (os.path.isfile('models/father/checkpoint')):
 # 	saver.restore(sess, "models/father/fatherpretrained_seq2seq.ckpt")
 # 	print("Model restored.")
+start_time = time.time()
 
-for i in range(numIterations):
+for i in range(11000):
 
 	encoderTrain, decoderTargetTrain, decoderInputTrain = getTrainingBatch(xTrain, yTrain, batchSize, maxEncoderLength)
 	feedDict = {encoderInputs[t]: encoderTrain[t] for t in range(maxEncoderLength)}
@@ -234,6 +237,7 @@ for i in range(numIterations):
 
 	if (i % 200 == 0):
 		print('Current loss:', curLoss, 'at iteration', i)
+		print("--- %s seconds ---" % (time.time() - start_time))
 		summary = sess.run(merged, feed_dict=feedDict)
 		writer.add_summary(summary, i)
 	if (i % 100 == 0 and i != 0):

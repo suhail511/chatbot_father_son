@@ -6,6 +6,8 @@ import datetime
 from sklearn.utils import shuffle
 import pickle
 import os
+import time
+
 # Removes an annoying Tensorflow warning
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 
@@ -222,6 +224,8 @@ if (os.path.isfile('models/son/checkpoint')):
 	saver.restore(sess, "models/son/sonpretrained_seq2seq.ckpt")
 	print("Model restored.")
 
+start_time = time.time()
+
 for i in range(numIterations):
 
 	encoderTrain, decoderTargetTrain, decoderInputTrain = getTrainingBatch(xTrain, yTrain, batchSize, maxEncoderLength)
@@ -234,6 +238,7 @@ for i in range(numIterations):
 
 	if (i % 200 == 0):
 		print('Current loss:', curLoss, 'at iteration', i)
+		print("--- %s seconds ---" % (time.time() - start_time))
 		summary = sess.run(merged, feed_dict=feedDict)
 		writer.add_summary(summary, i)
 	if (i % 100 == 0 and i != 0):
