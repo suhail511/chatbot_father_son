@@ -4,6 +4,7 @@ import numpy as np
 import os
 import re
 from datetime import datetime
+import nltk
 
 def cleanMessage(message):
 	# Remove new lines within message
