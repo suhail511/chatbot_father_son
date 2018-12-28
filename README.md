@@ -1,6 +1,6 @@
 # Father-Son-Chatbot
 
-The Father-Son chatbot that I trained to talk. This is following a clone of [this repository](https://github.com/adeshpande3/Facebook-Messenger-Bot) and [this blog-post](https://adeshpande3.github.io/adeshpande3.github.io/How-I-Used-Deep-Learning-to-Train-a-Chatbot-to-Talk-Like-Me)
+The Father-Son chatbot that I trained to talk. This is following a clone of [this repository](https://github.com/adeshpande3/Facebook-Messenger-Bot) and [this blog-post](https://adeshpande3.github.io/adeshpande3.github.io/How-I-Used-Deep-Learning-to-Train-a-Chatbot-to-Talk-Like-Me). Also check [this video](https://www.youtube.com/watch?v=pY9EwZ02sXU) and [this notebook](https://github.com/llSourcell/word_vectors_game_of_thrones-LIVE/blob/master/Thrones2Vec.ipynb).
 
 ## Overview
 
@@ -32,16 +32,15 @@ In order to run these scripts, you'll need the following libraries.
 ### If you don't have any Chat Data samples, use our pre-trained model. Skip to step 7.
 4. Now that we have all our conversation logs, we can go ahead and create our dataset. In our directory, let's run:
     ```bash
-    python createDataset.py
+    python createDict.py
     ```
     This will create Conversation Data for both Father and Son. This script will create a files named **sonConversationDictionary.npy** and **fatherConversationDictionary.npy** which are Numpy objects that contains pairs in the form of (MESSAGE, RESPONSE). File named **sonConversationData.txt** and **fatherConversationData.txt** will also be created. These are simply large text files the dictionary data in a unified form.
 
 5. Now that we have these files, we can start creating our word vectors through a Word2Vec model. This step is a little different from the others. The Tensorflow function we see later on (in SonSeq2seq.py and FatherSeq2Seq.py) actually also handles the embedding part.
     ```bash
-    python SonWord2Vec.py
-    python FatherWord2Vec.py
+    python Word2Vec.py
     ```
-    If you run word2vec.py in its entirety, this will create different wordlist files for Father and Son. **SonWordList.txt** and **FatherWordList.txt**, which simply contains all of the unique words in our corpus.
+    If you run word2vec.py in its entirety, this will create a wordlist file for the dataset. **WordList.txt**, which simply contains all of the unique words in our corpus.
 
 6. Now, we can use create and train our Seq2Seq model.
     ```bash
