@@ -137,7 +137,7 @@ numLayersLSTM = 3
 numIterations = 500000
 
 # Loading in all the data structures
-with open("data/WordList.txt", "rb") as fp:
+with open("data/wordList.txt", "rb") as fp:
 	wordList = pickle.load(fp)
 
 vocabSize = len(wordList)
