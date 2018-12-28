@@ -62,6 +62,8 @@ In case you want to add more training conversation, add them to files directory 
 
 ## Sample(s)
 
-![](Images/convSample.jpg)
+![](Images/convSample01.jpg)
+
+![](Images/convSample02.jpg)
 
 **Please let me know if you have any issues or if you have any suggestions for making this README better. If you thought a certain step was unclear, let me know and I'll try my best to edit the README and make any clarifications.** -->
