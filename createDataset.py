@@ -4,6 +4,8 @@ import numpy as np
 import os
 import re
 from datetime import datetime
+import glob
+import codecs
 
 def cleanMessage(message):
 	# Remove new lines within message
@@ -15,11 +17,16 @@ def cleanMessage(message):
 	cleanedMessage = re.sub('…',' ', cleanedMessage)
 	return cleanedMessage
 
-#Read file and Remove empty lines
-cnvFile = open('files/conversation.txt', 'r')
-allLines = cnvFile.readlines()
-while '\n' in allLines: allLines.remove('\n')
+#Read files and Remove empty lines
+filenames = sorted(glob.glob('files/*.txt'))
+print("Files found: ", filenames)
 
+allLines = []
+for filename in filenames:
+	with codecs.open(filename, "r", "utf-8") as file:
+		allLines.append(file.readlines())
+allLines = [item for sublist in allLines for item in sublist]
+while '\n' in allLines: allLines.remove('\n')
 
 #This is for the son
 personName = 'son'
