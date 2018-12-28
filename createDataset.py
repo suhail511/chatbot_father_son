@@ -12,6 +12,7 @@ def cleanMessage(message):
 	cleanedMessage = re.sub('([.,!?])','', cleanedMessage)
 	# Remove multiple spaces in message
 	cleanedMessage = re.sub(' +',' ', cleanedMessage)
+	cleanedMessage = re.sub('…',' ', cleanedMessage)
 	return cleanedMessage
 
 #Read file and Remove empty lines

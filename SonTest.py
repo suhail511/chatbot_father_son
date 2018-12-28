@@ -11,91 +11,6 @@ import time
 # Removes an annoying Tensorflow warning
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 
-def createTrainingMatrices(conversationFileName, wList, maxLen):
-	conversationDictionary = np.load(conversationFileName).item()
-	numExamples = len(conversationDictionary)
-	xTrain = np.zeros((numExamples, maxLen), dtype='int32')
-	yTrain = np.zeros((numExamples, maxLen), dtype='int32')
-	for index,(key,value) in enumerate(conversationDictionary.items()):
-		# Will store integerized representation of strings here (initialized as padding)
-		encoderMessage = np.full((maxLen), wList.index('<pad>'), dtype='int32')
-		decoderMessage = np.full((maxLen), wList.index('<pad>'), dtype='int32')
-		# Getting all the individual words in the strings
-		keySplit = key.split()
-		valueSplit = value.split()
-		keyCount = len(keySplit)
-		valueCount = len(valueSplit)
-		# Throw out sequences that are too long or are empty
-		if (keyCount > (maxLen - 1) or valueCount > (maxLen - 1) or valueCount == 0 or keyCount == 0):
-			continue
-		# Integerize the encoder string
-		for keyIndex, word in enumerate(keySplit):
-			try:
-				encoderMessage[keyIndex] = wList.index(word)
-			except ValueError:
-				# TODO: This isnt really the right way to handle this scenario
-				encoderMessage[keyIndex] = 0
-		encoderMessage[keyIndex + 1] = wList.index('<EOS>')
-		# Integerize the decoder string
-		for valueIndex, word in enumerate(valueSplit):
-			try:
-				decoderMessage[valueIndex] = wList.index(word)
-			except ValueError:
-				decoderMessage[valueIndex] = 0
-		decoderMessage[valueIndex + 1] = wList.index('<EOS>')
-		xTrain[index] = encoderMessage
-		yTrain[index] = decoderMessage
-	# Remove rows with all zeros
-	yTrain = yTrain[~np.all(yTrain == 0, axis=1)]
-	xTrain = xTrain[~np.all(xTrain == 0, axis=1)]
-	numExamples = xTrain.shape[0]
-	return numExamples, xTrain, yTrain
-
-def getTrainingBatch(localXTrain, localYTrain, localBatchSize, maxLen):
-	num = randint(0,numTrainingExamples - localBatchSize - 1)
-	arr = localXTrain[num:num + localBatchSize]
-	labels = localYTrain[num:num + localBatchSize]
-	# Reversing the order of encoder string apparently helps as per 2014 paper
-	reversedList = list(arr)
-	for index,example in enumerate(reversedList):
-		reversedList[index] = list(reversed(example))
-
-	# Lagged labels are for the training input into the decoder
-	laggedLabels = []
-	EOStokenIndex = wordList.index('<EOS>')
-	padTokenIndex = wordList.index('<pad>')
-	for example in labels:
-		eosFound = np.argwhere(example==EOStokenIndex)[0]
-		shiftedExample = np.roll(example,1)
-		shiftedExample[0] = EOStokenIndex
-		# The EOS token was already at the end, so no need for pad
-		if (eosFound != (maxLen - 1)):
-			shiftedExample[eosFound+1] = padTokenIndex
-		laggedLabels.append(shiftedExample)
-
-	# Need to transpose these
-	reversedList = np.asarray(reversedList).T.tolist()
-	labels = labels.T.tolist()
-	laggedLabels = np.asarray(laggedLabels).T.tolist()
-	return reversedList, labels, laggedLabels
-
-def translateToSentences(inputs, wList, encoder=False):
-	EOStokenIndex = wList.index('<EOS>')
-	padTokenIndex = wList.index('<pad>')
-	numStrings = len(inputs[0])
-	numLengthOfStrings = len(inputs)
-	listOfStrings = [''] * numStrings
-	for mySet in inputs:
-		for index,num in enumerate(mySet):
-			if (num != EOStokenIndex and num != padTokenIndex):
-				if (encoder):
-					# Encodings are in reverse!
-					listOfStrings[index] = wList[num] + " " + listOfStrings[index]
-				else:
-					listOfStrings[index] = listOfStrings[index] + " " + wList[num]
-	listOfStrings = [string.strip() for string in listOfStrings]
-	return listOfStrings
-
 def getTestInput(inputMessage, wList, maxLen):
 	encoderMessage = np.full((maxLen), wList.index('<pad>'), dtype='int32')
 	inputSplit = inputMessage.lower().split()
@@ -134,7 +49,6 @@ maxDecoderLength = maxEncoderLength
 lstmUnits = 112
 embeddingDim = lstmUnits
 numLayersLSTM = 3
-numIterations = 500000
 
 # Loading in all the data structures
 with open("data/SonWordList.txt", "rb") as fp:
@@ -163,17 +77,6 @@ if (os.path.isfile('embeddingMatrix.npy')):
 wordList.append('<pad>')
 wordList.append('<EOS>')
 vocabSize = vocabSize + 2
-
-if (os.path.isfile('data/SonSeq2SeqXTrain.npy') and os.path.isfile('data/SonSeq2SeqYTrain.npy')):
-	xTrain = np.load('data/SonSeq2SeqXTrain.npy')
-	yTrain = np.load('data/SonSeq2SeqYTrain.npy')
-	print('Finished loading training matrices')
-	numTrainingExamples = xTrain.shape[0]
-else:
-	numTrainingExamples, xTrain, yTrain = createTrainingMatrices('data/sonConversationDictionary.npy', wordList, maxEncoderLength)
-	np.save('data/SonSeq2SeqXTrain.npy', xTrain)
-	np.save('data/SonSeq2SeqYTrain.npy', yTrain)
-	print('Finished creating training matrices')
 
 tf.reset_default_graph()
 
@@ -204,12 +107,6 @@ sess.run(tf.global_variables_initializer())
 if (os.path.isfile('models/son/checkpoint')):
 	print('Training Models Found')
 	saver.restore(sess, tf.train.latest_checkpoint('models/son/'))
-
-# Uploading results to Tensorboard
-tf.summary.scalar('Loss', loss)
-merged = tf.summary.merge_all()
-logdir = "tensorboard/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S") + "/"
-writer = tf.summary.FileWriter(logdir, sess.graph)
 
 zeroVector = np.zeros((1), dtype='int32')
 
