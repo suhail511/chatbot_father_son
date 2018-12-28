@@ -65,12 +65,3 @@ In case you want to add more training conversation, add them to files directory 
 ![](Images/convSample.jpg)
 
 **Please let me know if you have any issues or if you have any suggestions for making this README better. If you thought a certain step was unclear, let me know and I'll try my best to edit the README and make any clarifications.** -->
-
-
-There ya go. You should be able to send messages to the chatbot, and see some interesting responses that (hopefully) resemble yourelf in some way.
-
-## Samples
-
-![](Images/Samples.png)
-
-**Please let me know if you have any issues or if you have any suggestions for making this README better. If you thought a certain step was unclear, let me know and I'll try my best to edit the README and make any clarifications.**
