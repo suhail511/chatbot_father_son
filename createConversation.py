@@ -11,7 +11,7 @@
 import SonResponse as son
 import FatherResponse as father
 
-sonsResponse = son.response("How are you?")
+sonsResponse = son.response("Where are you?")
 print("Son :" , sonsResponse)
 for i in range(10):
     fathersResponse = father.response(sonsResponse)

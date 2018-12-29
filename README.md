@@ -1,6 +1,6 @@
 # Father-Son-Chatbot
 
-The Father-Son chatbot that I trained to talk. This is following a clone of [this repository](https://github.com/adeshpande3/Facebook-Messenger-Bot) and [this blog-post](https://adeshpande3.github.io/adeshpande3.github.io/How-I-Used-Deep-Learning-to-Train-a-Chatbot-to-Talk-Like-Me)
+The Father-Son chatbot that I trained to talk. This is following a clone of [this repository](https://github.com/adeshpande3/Facebook-Messenger-Bot) and [this blog-post](https://adeshpande3.github.io/adeshpande3.github.io/How-I-Used-Deep-Learning-to-Train-a-Chatbot-to-Talk-Like-Me). Also check [this video](https://www.youtube.com/watch?v=pY9EwZ02sXU) and [this notebook](https://github.com/llSourcell/word_vectors_game_of_thrones-LIVE/blob/master/Thrones2Vec.ipynb).
 
 ## Overview
 
