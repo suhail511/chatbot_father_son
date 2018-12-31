@@ -11,16 +11,43 @@
 import SonResponse as son
 import FatherResponse as father
 import sys
+from random import randint
+import time
+
+
 system_arguments = []
 system_arguments = (sys.argv)
-if system_arguments == []:
-    system_arguments.append(1,"How are you?")
-    system_arguments.append(2,10)
 
+# t,s = str(time.time()).split('.')
+# filename = t+".txt"
+# print ("writing to", filename)
+
+
+conversationStarters = ["I know",
+					"Are you sure?",
+					"How are you son?",
+					"Remarkable",
+					"Did you hear from Law School",
+                    "Good morning",
+                    "Hey",
+                    "Can we have a talk?",
+                    "How are you?",
+                    "Do you want anything?",
+                    "Hi",
+                    "Did you find it?",
+                    "How were your vacations",
+                    "You sister is worried",
+                    "Clean the kitchen please"
+                    "What song is that?"
+					]
+num = randint(0,len(conversationStarters) - 1)
+if len(system_arguments) <= 1:
+    system_arguments.append(conversationStarters[num])
+    system_arguments.append(30)
+print(system_arguments)
 # orig_stdout = sys.stdout
-# f = open('outputs/out.txt', 'w')
+# f = open('outputs/'+filename, 'w')
 # sys.stdout = f
-
 
 
 print("Father :" , system_arguments[1])
