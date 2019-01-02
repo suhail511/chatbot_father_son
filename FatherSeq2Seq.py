@@ -129,8 +129,8 @@ def idsToSentence(ids, wList):
 
 # Hyperparamters
 batchSize = 24
-maxEncoderLength = 15
-maxDecoderLength = maxEncoderLength
+maxEncoderLength = 50
+maxDecoderLength = 25
 lstmUnits = 112
 embeddingDim = lstmUnits
 numLayersLSTM = 3

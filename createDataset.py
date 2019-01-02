@@ -6,7 +6,28 @@ import re
 from datetime import datetime
 import glob
 import codecs
+from nltk.tokenize import word_tokenize,sent_tokenize
 
+def takeCareOfLongMessages(theDict):
+
+	newresponseDictionary = theDict
+	keys = []
+	values = []
+	for k,v in responseDictionary.items():
+	    keys.append(k)
+	    values.append(v)
+
+	for index,key in enumerate(keys):
+		if len(word_tokenize(key)) >= 50 or len(word_tokenize(values[index])) >= 50 :
+			key_sentences = sent_tokenize(key)
+			value_sentences = sent_tokenize(values[index])
+
+			for number, value_sentence in enumerate(value_sentences):
+				for key_sentence in key_sentences:
+					for i in range(number):
+						key_sentence += ' <pad> '
+					newresponseDictionary[key_sentence] = value_sentence
+	return newresponseDictionary
 def cleanMessage(message):
 	# Remove new lines within message
 	cleanedMessage = message.replace('\n',' ').lower()
@@ -70,6 +91,7 @@ for index,lines in enumerate(allLines):
             responseDictionary[otherPersonsMessage] = myMessage
         myMessage, otherPersonsMessage, currentSpeaker = "","",""
 
+responseDictionary = takeCareOfLongMessages(responseDictionary)
 
 np.save('data/sonConversationDictionary.npy', responseDictionary)
 
@@ -122,6 +144,8 @@ for index,lines in enumerate(allLines):
             myMessage = cleanMessage(currentLine[colon+1:])
             responseDictionary[otherPersonsMessage] = myMessage
         myMessage, otherPersonsMessage, currentSpeaker = "","",""
+
+responseDictionary = takeCareOfLongMessages(responseDictionary)
 
 np.save('data/fatherConversationDictionary.npy', responseDictionary)
 
