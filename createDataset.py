@@ -11,10 +11,12 @@ def cleanMessage(message):
 	# Remove new lines within message
 	cleanedMessage = message.replace('\n',' ').lower()
 	# Remove punctuation
-	cleanedMessage = re.sub('([.,!?])','', cleanedMessage)
+	cleanedMessage = re.sub('\(\[\]\)','', cleanedMessage)
+	cleanedMessage = re.sub('\.',' <EOS> ', cleanedMessage)
 	# Remove multiple spaces in message
 	cleanedMessage = re.sub(' +',' ', cleanedMessage)
 	cleanedMessage = re.sub('…',' ', cleanedMessage)
+	print(cleanedMessage)
 	return cleanedMessage
 
 #Read files and Remove empty lines
@@ -80,6 +82,7 @@ for key,value in responseDictionary.items():
         continue
     conversationFile.write(key.strip() + ' ' + value.strip() + ' ')
 
+conversationFile.close()
 
 #This is for the Father
 personName = 'father'
@@ -131,3 +134,5 @@ for key,value in responseDictionary.items():
         # If there are empty strings
         continue
     conversationFile.write(key.strip() + ' ' + value.strip() +' ')
+
+conversationFile.close()

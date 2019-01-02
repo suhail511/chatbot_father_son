@@ -56,9 +56,10 @@ In order to run these scripts, you'll need the following libraries.
     python createConversation.py
     ```
 
-There you go. You should be able to see around 10 lines of conversation between father and son bots. You can pass arguments as initial Son chat and the total number of conversation lines you want. As shown below :
+There you go. You should be able to see around 10 lines of conversation between father and son bots. You can pass arguments as initial line and the total number of conversation lines you want. As shown below :
+
     ```bash
-    python createConversation.py "Hi, How are you?" 20
+    python createConversation.py "How were your vacations?" 20
     ```
 
 In case you want to add more training conversation, add them to files directory in txt and in to shown format above. You'll have to run all the commands again to rebuild the models.
