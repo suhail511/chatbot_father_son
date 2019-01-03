@@ -137,7 +137,7 @@ numLayersLSTM = 3
 numIterations = 500000
 
 # Loading in all the data structures
-with open("data/SonWordList.txt", "rb") as fp:
+with open("data/sonWordList.txt", "rb") as fp:
 	wordList = pickle.load(fp)
 
 vocabSize = len(wordList)
@@ -164,15 +164,15 @@ wordList.append('<pad>')
 wordList.append('<EOS>')
 vocabSize = vocabSize + 2
 
-if (os.path.isfile('data/SonSeq2SeqXTrain.npy') and os.path.isfile('data/SonSeq2SeqYTrain.npy')):
-	xTrain = np.load('data/SonSeq2SeqXTrain.npy')
-	yTrain = np.load('data/SonSeq2SeqYTrain.npy')
+if (os.path.isfile('data/son2SeqXTrain.npy') and os.path.isfile('data/sonSeq2SeqYTrain.npy')):
+	xTrain = np.load('data/sonSeq2SeqXTrain.npy')
+	yTrain = np.load('data/sonSeq2SeqYTrain.npy')
 	print('Finished loading training matrices')
 	numTrainingExamples = xTrain.shape[0]
 else:
 	numTrainingExamples, xTrain, yTrain = createTrainingMatrices('data/sonConversationDictionary.npy', wordList, maxEncoderLength)
-	np.save('data/SonSeq2SeqXTrain.npy', xTrain)
-	np.save('data/SonSeq2SeqYTrain.npy', yTrain)
+	np.save('data/sonSeq2SeqXTrain.npy', xTrain)
+	np.save('data/sonSeq2SeqYTrain.npy', yTrain)
 	print('Finished creating training matrices')
 
 tf.reset_default_graph()

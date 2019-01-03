@@ -137,7 +137,7 @@ numLayersLSTM = 3
 numIterations = 500000
 
 # Loading in all the data structures
-with open("data/FatherWordList.txt", "rb") as fp:
+with open("data/fatherWordList.txt", "rb") as fp:
 	wordList = pickle.load(fp)
 
 vocabSize = len(wordList)
@@ -164,15 +164,15 @@ wordList.append('<pad>')
 wordList.append('<EOS>')
 vocabSize = vocabSize + 2
 
-if (os.path.isfile('data/FatherSeq2SeqXTrain.npy') and os.path.isfile('data/FatherSeq2SeqYTrain.npy')):
-	xTrain = np.load('data/FatherSeq2SeqXTrain.npy')
-	yTrain = np.load('data/FatherSeq2SeqYTrain.npy')
+if (os.path.isfile('data/fatherSeq2SeqXTrain.npy') and os.path.isfile('data/fatherSeq2SeqYTrain.npy')):
+	xTrain = np.load('data/fatherSeq2SeqXTrain.npy')
+	yTrain = np.load('data/fatherSeq2SeqYTrain.npy')
 	print('Finished loading training matrices')
 	numTrainingExamples = xTrain.shape[0]
 else:
 	numTrainingExamples, xTrain, yTrain = createTrainingMatrices('data/fatherConversationDictionary.npy', wordList, maxEncoderLength)
-	np.save('data/FatherSeq2SeqXTrain.npy', xTrain)
-	np.save('data/FatherSeq2SeqYTrain.npy', yTrain)
+	np.save('data/fatherSeq2SeqXTrain.npy', xTrain)
+	np.save('data/fatherSeq2SeqYTrain.npy', yTrain)
 	print('Finished creating training matrices')
 
 tf.reset_default_graph()
