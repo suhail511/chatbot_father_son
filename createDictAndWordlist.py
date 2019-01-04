@@ -145,7 +145,7 @@ def processDataset(filename):
     return myStr, finalDict
 
 def cleanDict(datasetDictionary):
-    if "I." in datasetDictionary: datasetDictionary.remove("I.")
+    if "I." in datasetDictionary: datasetDictionary.remove("i.").remove('c')
     return datasetDictionary
 
 #this is for son-bot
