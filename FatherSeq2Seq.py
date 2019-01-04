@@ -114,11 +114,10 @@ def getTestInput(inputMessage, wList, maxLen):
 def idsToSentence(ids, wList):
 	EOStokenIndex = wList.index('<EOS>')
 	padTokenIndex = wList.index('<pad>')
-	EOMTokenIndex = wList.index('endofmessage')
 	myStr = ""
 	listOfResponses=[]
 	for num in ids:
-	    if (num[0] == EOStokenIndex or num[0] == padTokenIndex or num[0] == EOMTokenIndex):
+	    if (num[0] == EOStokenIndex or num[0] == padTokenIndex):
 	        listOfResponses.append(myStr)
 	        myStr = ""
 	    else:
@@ -207,10 +206,10 @@ if (os.path.isfile('models/father/checkpoint')):
 	saver.restore(sess, tf.train.latest_checkpoint('models/father/'))
 
 # Uploading results to Tensorboard
-# tf.summary.scalar('Loss', loss)
-# merged = tf.summary.merge_all()
-# logdir = "tensorboard/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S") + "/"
-# writer = tf.summary.FileWriter(logdir, sess.graph)
+tf.summary.scalar('Loss', loss)
+merged = tf.summary.merge_all()
+logdir = "tensorboard/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S") + "/"
+writer = tf.summary.FileWriter(logdir, sess.graph)
 
 # Some test strings that we'll use as input at intervals during training
 encoderTestStrings = ["dad?",
