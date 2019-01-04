@@ -98,7 +98,7 @@ def translateToSentences(inputs, wList, encoder=False):
 
 def getTestInput(inputMessage, wList, maxLen):
 	encoderMessage = np.full((maxLen), wList.index('<pad>'), dtype='int32')
-	inputSplit = inputMessage.lower().split()
+	inputSplit = inputMessage.split()
 	for index,word in enumerate(inputSplit):
 		try:
 			encoderMessage[index] = wList.index(word)
@@ -112,25 +112,26 @@ def getTestInput(inputMessage, wList, maxLen):
 	return encoderMessageList
 
 def idsToSentence(ids, wList):
-    EOStokenIndex = wList.index('<EOS>')
-    padTokenIndex = wList.index('<pad>')
-    myStr = ""
-    listOfResponses=[]
-    for num in ids:
-        if (num[0] == EOStokenIndex or num[0] == padTokenIndex):
-            listOfResponses.append(myStr)
-            myStr = ""
-        else:
-            myStr = myStr + wList[num[0]] + " "
-    if myStr:
-        listOfResponses.append(myStr)
-    listOfResponses = [i for i in listOfResponses if i]
-    return listOfResponses
+	EOStokenIndex = wList.index('<EOS>')
+	padTokenIndex = wList.index('<pad>')
+	EOMTokenIndex = wList.index('endofmessage')
+	myStr = ""
+	listOfResponses=[]
+	for num in ids:
+	    if (num[0] == EOStokenIndex or num[0] == padTokenIndex or num[0] == EOMTokenIndex):
+	        listOfResponses.append(myStr)
+	        myStr = ""
+	    else:
+	        myStr = myStr + wList[num[0]] + " "
+	if myStr:
+	    listOfResponses.append(myStr)
+	listOfResponses = [i for i in listOfResponses if i]
+	return listOfResponses
 
 # Hyperparamters
-batchSize = 24
+batchSize = 48
 maxEncoderLength = 50
-maxDecoderLength = maxEncoderLength
+maxDecoderLength = 25
 lstmUnits = 112
 embeddingDim = lstmUnits
 numLayersLSTM = 3
@@ -148,7 +149,7 @@ if (os.path.isfile('embeddingMatrix.npy')):
 	wordVectors = np.load('embeddingMatrix.npy')
 	wordVecDimensions = wordVectors.shape[1]
 else:
-	print('No embedding matrix found, setting dimensions of word vectors to 100')
+	print('Setting dimensions of word vectors to 100')
 	wordVecDimensions = int(100)
 
 # Add two entries to the word vector matrix. One to represent padding tokens,
@@ -206,10 +207,10 @@ if (os.path.isfile('models/father/checkpoint')):
 	saver.restore(sess, tf.train.latest_checkpoint('models/father/'))
 
 # Uploading results to Tensorboard
-tf.summary.scalar('Loss', loss)
-merged = tf.summary.merge_all()
-logdir = "tensorboard/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S") + "/"
-writer = tf.summary.FileWriter(logdir, sess.graph)
+# tf.summary.scalar('Loss', loss)
+# merged = tf.summary.merge_all()
+# logdir = "tensorboard/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S") + "/"
+# writer = tf.summary.FileWriter(logdir, sess.graph)
 
 # Some test strings that we'll use as input at intervals during training
 encoderTestStrings = ["dad?",
@@ -234,8 +235,7 @@ for i in range(numIterations):
 	curLoss, _, pred = sess.run([loss, optimizer, decoderPrediction], feed_dict=feedDict)
 
 	if (i % 200 == 0):
-		print('Current loss:', curLoss, 'at iteration', i)
-		print("--- %s seconds ---" % (time.time() - start_time))
+		print('Current loss:', curLoss, 'at iteration', i, "--- %s seconds ---" % round(time.time() - start_time))
 		summary = sess.run(merged, feed_dict=feedDict)
 		writer.add_summary(summary, i)
 	if (i % 100 == 0 and i != 0):

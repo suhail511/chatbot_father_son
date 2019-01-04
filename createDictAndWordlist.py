@@ -39,10 +39,9 @@ def addEnfOfMessage(theDict):
 
 def cleanMessage(message):
     # Remove new lines within message
-    cleanedMessage = message.replace('\n','')
-#     cleanedMessage = message.replace('\?','').lower()
+    cleanedMessage = message.replace('\n','').lower()
     # Remove punctuation
-    # 	cleanedMessage = re.sub('\(\[\]\)','', cleanedMessage)
+    cleanedMessage = re.sub('\(\[\]\)','', cleanedMessage)
     # Remove multiple spaces in message
     cleanedMessage = re.sub(' +',' ', cleanedMessage)
     cleanedMessage = re.sub('-+','-', cleanedMessage)
@@ -91,7 +90,7 @@ def createResponseDict(name):
             myMessage, otherPersonsMessage, currentSpeaker = "","",""
 
     responseDictionary = takeCareOfLongMessages(responseDictionary)
-    responseDictionary = addEnfOfMessage(responseDictionary)
+    # responseDictionary = addEnfOfMessage(responseDictionary)
 
     print('Response Dictionaty for {} created'.format(name))
     return responseDictionary
@@ -134,6 +133,8 @@ for key,value in responseDictionary.items():
     conversationFile.write(key.strip() + ' ' + value.strip() + ' ')
 conversationFile.close()
 
+
+## Creating Wordlists
 def processDataset(filename):
     openedFile = open(filename, 'r')
     allLines = openedFile.readlines()

@@ -8,8 +8,8 @@
 # import os
 # import time
 
-import SonResponse as son
-import FatherResponse as father
+import sonResponse as son
+import fatherResponse as father
 import sys
 from random import randint
 import time

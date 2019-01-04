@@ -46,8 +46,8 @@ def idsToSentence(ids, wList):
 
 # Hyperparamters
 batchSize = 24
-maxEncoderLength = 15
-maxDecoderLength = maxEncoderLength + 1
+maxEncoderLength = 50
+maxDecoderLength = 25
 lstmUnits = 112
 embeddingDim = lstmUnits
 numLayersLSTM = 3
@@ -88,7 +88,6 @@ saver = tf.train.Saver()
 sess.run(tf.global_variables_initializer())
 # Loading in a saved model
 if (os.path.isfile('models/son/checkpoint')):
-	print('Training Models Found')
 	saver.restore(sess, tf.train.latest_checkpoint('models/son/'))
 
 zeroVector = np.zeros((1), dtype='int32')
