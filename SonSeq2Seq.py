@@ -9,7 +9,7 @@ import os
 import time
 
 # Removes an annoying Tensorflow warning
-os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
+# os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 
 def createTrainingMatrices(conversationFileName, wList, maxLen):
 	conversationDictionary = np.load(conversationFileName).item()
