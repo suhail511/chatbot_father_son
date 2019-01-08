@@ -37,7 +37,7 @@ conversationStarters = ["I know",
                     "Did you find it?",
                     "How were your vacations",
                     "You sister is worried",
-                    "Clean the kitchen please"
+                    "Clean the kitchen please",
                     "What song is that?"
 					]
 num = randint(0,len(conversationStarters) - 1)
