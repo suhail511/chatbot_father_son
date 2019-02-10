@@ -67,6 +67,9 @@ In case you want to add more training conversation, add them to files directory 
 
 ![](Images/convSample02.jpg)
 
-This is following a clone of [this repository](https://github.com/adeshpande3/Facebook-Messenger-Bot) and [this blog-post](https://adeshpande3.github.io/adeshpande3.github.io/How-I-Used-Deep-Learning-to-Train-a-Chatbot-to-Talk-Like-Me). Also check [this video](https://www.youtube.com/watch?v=pY9EwZ02sXU) and [this notebook](https://github.com/llSourcell/word_vectors_game_of_thrones-LIVE/blob/master/Thrones2Vec.ipynb).
+## Contribution(s)
+
+1. [This repository](https://github.com/adeshpande3/Facebook-Messenger-Bot) and [this blog-post](https://adeshpande3.github.io/adeshpande3.github.io/How-I-Used-Deep-Learning-to-Train-a-Chatbot-to-Talk-Like-Me).
+2. Also check [this video](https://www.youtube.com/watch?v=pY9EwZ02sXU) and [this notebook](https://github.com/llSourcell/word_vectors_game_of_thrones-LIVE/blob/master/Thrones2Vec.ipynb).
 
 **Please let me know if you have any issues or if you have any suggestions for making this README better. If you thought a certain step was unclear, let me know and I'll try my best to edit the README and make any clarifications.**
