@@ -2,7 +2,7 @@
 
 ## Overview
 
-For this project, I wanted to train a Sequence To Sequence model on some conversation logs of Father-Son conversation dataset. Let me explain how you can train the chatbot.
+This project trains a Sequence To Sequence model on some conversation logs of Father-Son conversation dataset. Let me explain how you can train the chatbot.
 
 ## Requirements and Installation
 In order to run these scripts, you'll need the following libraries.
